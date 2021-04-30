@@ -1,18 +1,53 @@
 <html>
 <head>
   <style>
-   
+    body{
+		background:white;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover;
+      background-position: center top;
+      margin:1em;
+    }
+    p2{
+      border:2px solid black;
+      padding:2px;
+      text-align:center;
+      font-size:24px;
+		color:red;
+      cursor: pointer;
+    }
+    .show{
+		position:relative;
+      top:250px;
+      margin:auto;
+      color:red;
+		border:5px solid black;
+      padding:10px;
+      text-align:center;
+    }
+    /*โอ เด็กหนุ่มผู้มองโลกในแง่ดี เขามีปณิธานที่จะ
+กำจัดขยะออกไปจากเมืองนี้ให้หมด โดยที่เขาจะต้องพยายามชักจูงผู้คนมาช่วยกันทำความ
+สะอาดและจะต้องทำงานหาเงินมาด้วย*/
     
   </style>
 </head>
 <body>
-	<h2 id="Start" onclick="start()">testsomething</h2>
+  <div class="show">
+  <h1 id="txt">โอ เด็กหนุ่มผู้มองโลกในแง่ดี เขามีปณิธานที่จะ
+กำจัดขยะออกไปจากเมืองนี้ให้หมด โดยที่เขาจะต้องพยายามชักจูงผู้คนมาช่วยกันทำความ
+สะอาดและจะต้องทำงานหาเงินมาด้วย</h1>
+  <p2 onclick ="next()">Next</p2>
+  </div>
   
-
+  
 </body>
   <script>
     function start(){
 		document.getElementById('Start').innerHTML = "Test";
+    }
+    function next(){
+		document.getElementById('txt').innerHTML = "How to Play";
     }
   </script>
 </html>
