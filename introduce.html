@@ -1,13 +1,28 @@
 <html>
 <head>
-  <style>
+<style>
     body{
-		background:white;
+    }
+    #background{
+		/*border:1px solid black;
       background-repeat: no-repeat;
       background-attachment: fixed;
       background-size: cover;
-      background-position: center top;
-      margin:1em;
+      padding:10px;
+      margin:10px;
+      background:blue;
+      background-origin:padding-box;*/
+      position:absolute;
+      border: 3px solid black;
+  		padding: 15px;
+      
+ 		background: lightblue;/*ฉากตอนแนะนำตัว*/
+      background-repeat: no-repeat;
+      background-size: cover;
+  		background-clip: padding-box;
+      width:90%;
+      height:90%;
+      left:5%;
     }
     p2{
       border:2px solid black;
@@ -26,28 +41,314 @@
       padding:10px;
       text-align:center;
     }
-    /*โอ เด็กหนุ่มผู้มองโลกในแง่ดี เขามีปณิธานที่จะ
+    /*.actionbox{
+		position:relative;
+      top:250px;
+      margin:50px;
+      color:red;
+		border:5px solid black;
+      padding:10px;
+      text-align:center;
+      cursor: pointer;
+    }*/
+    #action1{
+      position:relative;
+      top:250px;
+      margin:50px;
+      color:red;
+		border:5px solid black;
+      padding:10px;
+      text-align:center;
+      cursor: pointer;
+		display:none;
+    }
+    #action2{
+      position:relative;
+      top:250px;
+      margin:50px;
+      color:red;
+		border:5px solid black;
+      padding:10px;
+      text-align:center;
+      cursor: pointer;
+		display:none;
+    }
+    #action3{
+      position:relative;
+      top:250px;
+      margin:50px;
+      color:red;
+		border:5px solid black;
+      padding:10px;
+      text-align:center;
+      cursor: pointer;
+		display:none;
+    }
+    #warningbox{
+		border:5px solid black;
+      padding:10px;
+      text-align:center;
+      cursor: pointer;
+		display:none;
+    }
+    #scene{
+		background:red;
+      display:block;
+    }
+    #scene2{
+
+    }
+    #scene3{
+
+    }
+    
+    #border{
+		/*display:none;*/
+    }
+    #UIgame{
+      position:absolute;
+      width:95%;
+      height:10%;
+      top:3px;
+      left:2.5%;
+      margin:auto;
+		border:2px solid black;
+      display:none;
+    }
+    #FirstUI{
+		text-align:left;
+    }
+    #SecondUI{
+      text-align:center;
+    }
+    #ThirdUI{
+      
+		text-align:right;
+    }
+    /*<body>
+  <div id="backgound">
+    
+  
+  <div id="border" class="show">
+  <h1 id="txt">โอ เด็กหนุ่มผู้มองโลกในแง่ดี เขามีปณิธานที่จะ
 กำจัดขยะออกไปจากเมืองนี้ให้หมด โดยที่เขาจะต้องพยายามชักจูงผู้คนมาช่วยกันทำความ
-สะอาดและจะต้องทำงานหาเงินมาด้วย*/
+สะอาดและจะต้องทำงานหาเงินมาด้วย</h1>
+    <p2 onclick ="next()">Next</p2>
+  </div>
+  <div id="UIgame"></div>
+  <div id="action1" onclick='takeaction(1)'>asa</div>
+  <div id="action2" onclick='takeaction(2)'>share</div>
+    <div id="action3" onclick='takeaction(3)'>parttime</div>
+  <div id="scene"></div>
+  </div>
+</body>*/
+    
+    /*<h1 id="txt">โอ เด็กหนุ่มผู้มองโลกในแง่ดี เขามีปณิธานที่จะ
+กำจัดขยะออกไปจากเมืองนี้ให้หมด โดยที่เขาจะต้องพยายามชักจูงผู้คนมาช่วยกันทำความ
+สะอาดและจะต้องทำงานหาเงินมาด้วย</h1><p2 onclick ="next()">Next</p2>*/
     
   </style>
 </head>
 <body>
-  <div class="show">
-  <h1 id="txt">โอ เด็กหนุ่มผู้มองโลกในแง่ดี เขามีปณิธานที่จะ
+<div id="background">
+<div id="border" class="show">
+<h1 id="txt">โอ เด็กหนุ่มผู้มองโลกในแง่ดี เขามีปณิธานที่จะ
 กำจัดขยะออกไปจากเมืองนี้ให้หมด โดยที่เขาจะต้องพยายามชักจูงผู้คนมาช่วยกันทำความ
 สะอาดและจะต้องทำงานหาเงินมาด้วย</h1>
-  <p2 onclick ="next()">Next</p2>
-  </div>
-  
-  
+<p2 onclick="next()">Next</p2>
+</div>
+<div id="UIgame"></div>
+<div id="action1" onclick='takeaction(1)'>asa</div>
+<div id="action2" onclick='takeaction(2)'>share</div>
+<div id="action3" onclick='takeaction(3)'>parttime</div>
+<div id="scene"></div>
+</div>
 </body>
-  <script>
+<script>
+    var final = 0;
+    var action = 0;
+    var introduce = 1;
+    var follower = 30;
+    var unfollower = 220;
+    var money = 500;
+    var reputation = 30;
+    var junk = 500;
+    var time = {day:1, phase:1};
+  	 var state = 'เช้า';
     function start(){
 		document.getElementById('Start').innerHTML = "Test";
     }
     function next(){
-		document.getElementById('txt').innerHTML = "How to Play";
+      if(introduce == 1){
+        introduce = introduce + 1;
+			document.getElementById('txt').innerHTML = "How to Play";
+      }
+      else if(introduce == 2){
+         introduce = introduce + 1;
+			document.getElementById('txt').innerHTML = "Goal";
+      }
+      else if(introduce == 3){
+        document.getElementById('border').style.display = "none";
+        document.getElementById('UIgame').style.display = "block";
+        document.getElementById('UIgame').innerHTML = "<h1>Unfollower:220 คน Money:500 บาท Junk:500 Follower:30 คน Reputatuin:10 Time:วันที่ 1 เช้า<\h1>";
+        document.getElementById('action1').style.display = "block";
+        document.getElementById('action2').style.display = "block";
+        document.getElementById('action3').style.display = "block";
+        /*document.body.style.background = "red";*/
+        introduce = introduce + 1;
+        
+      }
+      //ไว้กด next ข้ามฉาก
+       else if(introduce == 4){
+         document.getElementById('border').style.display = "none";
+         document.getElementById('background').style.background = "lightblue"; //อันนี้ scene หมู่บ้าน
+         document.getElementById('action1').style.display = "block";
+      document.getElementById('action2').style.display = "block";
+      document.getElementById('action3').style.display = "block";
+       }
+      if(final == 1){
+        if(junk == 0 && follower >= 125){
+        document.getElementById('txt').innerHTML = "End 1";
+        	document.getElementById('background').style.background = "blue";//ฉากจบ
+          introduce == 6;
+        }
+        else if(junk > 0){
+			document.getElementById('txt').innerHTML = "End 2";
+        	document.getElementById('background').style.background = "blue";//ฉากจบ
+          introduce == 6;
+        }
+        else if(junk == 0 && follower < 125){
+			document.getElementById('txt').innerHTML = "End 3";
+        	document.getElementById('background').style.background = "blue";//ฉากจบ
+          introduce == 6;
+        }
+      }
+      if(introduce == 6){
+			//ไปเว็บต่อไป landing
+      }
+    }
+    
+    
+    function takeaction(action){
+     if (action == 1){
+       if(money < 300){
+         document.getElementById('action1').style.display = "none";
+      	document.getElementById('action2').style.display = "none";
+        document.getElementById('action3').style.display = "none";
+        document.getElementById('border').style.display = "block";
+        document.getElementById('txt').innerHTML = "เงินไม่พอ";
+       }
+       
+       else{
+			action1();
+       }
+     }
+     else if (action == 2){
+			action2();
+     }
+     else if(action == 3){
+			action3();
+     }
+    }
+  
+  
+  function calculatetime(){
+    if(time.phase == 1){
+		state = "เช้า";
+    }
+    else if(time.phase == 2){
+		state = "กลางวัน";
+    }
+    else if(time.phase == 3){
+		state = "เย็น";
+    }
+    else if(time.phase == 4){
+      time.phase = 1;
+		time.day = time.day + 1;
+      state = "เช้า";
+    }
+    return 0;
+    
+  }
+  
+    
+    function action1(){
+        people = Math.floor(Math.random() * 10) + 5;
+        money = money - 300;
+        junk = junk - 1 - reputation;
+        reputation = reputation + people;
+      	time.phase = time.phase + 1;
+      calculatetime();
+      if(junk <= 0){
+        junk = 0;
+        document.getElementById('UIgame').innerHTML = "<h1>Unfollower:"+unfollower+"คน"+"Money:"+money+ "บาท"+"Junk:"+junk+"Follower:"+follower+"คน"+"Reputatuin:"+reputation+"Time:วันที่"+ time.day+ state +"<\h1>";
+      }
+      else{
+			document.getElementById('UIgame').innerHTML = "<h1>Unfollower:"+unfollower+"คน"+"Money:"+money+ "บาท"+"Junk:"+junk+"Follower:"+follower+"คน"+"Reputatuin:"+reputation+"Time:วันที่"+ time.day+ state +"<\h1>";
+      }
+      document.getElementById('background').style.background = "url(https://media.discordapp.net/attachments/829318884309073930/839054380287787018/scene1.png?width=1007&height=559)";
+      document.getElementById('action1').style.display = "none";
+      document.getElementById('action2').style.display = "none";
+      document.getElementById('action3').style.display = "none";
+      document.getElementById('border').style.display = "block";
+      document.getElementById('txt').innerHTML = "scene1 ทำอาสา";
+      if(time.day == 8){
+        introduce = 5;
+			final = 1;
+      }
+    }
+    
+    
+    
+    
+    
+    function action2(){
+		follower = follower + reputation;
+      unfollower = 250 - follower;
+      time.phase = time.phase + 1;
+      calculatetime();
+      if(unfollower <= 0){
+        follower = 250;
+        unfollower = 0;
+      document.getElementById('UIgame').innerHTML = "<h1>Unfollower:"+unfollower+"คน"+"Money:"+money+ "บาท"+"Junk:"+junk+"Follower:"+follower+"คน"+"Reputatuin:"+reputation+"Time:วันที่"+ time.day+ state +"<\h1>";
+      }
+      else{
+		document.getElementById('UIgame').innerHTML = "<h1>Unfollower:"+unfollower+"คน"+"Money:"+money+ "บาท"+"Junk:"+junk+"Follower:"+follower+"คน"+"Reputatuin:"+reputation+"Time:วันที่"+ time.day+ state +"<\h1>";
+      }
+      document.getElementById('background').style.background = "url(https://media.discordapp.net/attachments/829318884309073930/839054378865917962/scene2.png?width=1007&height=559)";
+      document.getElementById('action1').style.display = "none";
+      document.getElementById('action2').style.display = "none";
+      document.getElementById('action3').style.display = "none";
+      document.getElementById('border').style.display = "block";
+      document.getElementById('txt').innerHTML = "scene2 share";
+      if(time.day == 8){
+        introduce = 5;
+			final = 1;
+      }
+    }
+    
+    
+    
+    
+    
+    function action3(){
+		money = money + 200;
+      time.phase = time.phase + 1;
+      calculatetime();
+      document.getElementById('UIgame').innerHTML = "<h1>Unfollower:"+unfollower+"คน"+"Money:"+money+ "บาท"+"Junk:"+junk+"Follower:"+follower+"คน"+"Reputatuin:"+reputation+"Time:วันที่"+ time.day+ state +"<\h1>";
+      document.getElementById('background').style.background = "url(https://media.discordapp.net/attachments/829318884309073930/839054375850082344/scene3.png?width=1007&height=559)";
+      /*test*/
+      /*document.getElementById('UIgame').innerHTML = "timephase:"+time.phase+"state:"+state+"day:"+time.day;*/
+      /*test*/
+      document.getElementById('action1').style.display = "none";
+      document.getElementById('action2').style.display = "none";
+      document.getElementById('action3').style.display = "none";
+      document.getElementById('border').style.display = "block";
+      document.getElementById('txt').innerHTML = "scene3 parttime";
+      if(time.day == 8){
+        introduce = 5;
+			final = 1;
+      }
     }
   </script>
 </html>
